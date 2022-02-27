@@ -1,0 +1,7 @@
+<div class="col-sm-6" *ngFor="let vinh of tuors">
+   <h2>tên : {{vinh.name}}</h2>
+  <h4>giá:  {{vinh.price}}</h4>
+  <h4 *ngIf="vinh.status=== 1 " style="color: cornflowerblue"> trạng thái: còn tuor</h4>
+  <h4 *ngIf="vinh.status=== 2 " style="color: red"> trạng thái:  hết tuor</h4>
+  <h2>mô tả</h2><p>{{vinh.description}}</p>
+</div>

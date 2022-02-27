@@ -1,0 +1,293 @@
+
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Some Links</h3>
+      <p>Lorem ipsum dolor sit ame.</p>
+
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+
+      </ul>
+      <hr class="d-sm-none">
+    </div>
+    <div class="col-sm-8">
+      <label for="site-search">Search the site:</label>
+      <input type="search" id="site-search" name="q"
+             aria-label="Search through site content">
+      <button>Search</button>
+      <table style="border: 2px">
+        <caption style="text-align: center">Making the Web Beautiful!</caption>
+        <thead>
+        <tr>
+          <th colspan="5" style="text-align: center">User manager</th>
+          <th>
+            <button class="favorite styled" data-toggle="modal" data-target="#create"
+                    type="button">
+              create
+            </button>
+          </th>
+          <th></th>
+        </tr>
+        <tr style="background-color: steelblue">
+          <th style="text-align: center">id</th>
+          <th style="text-align: center">name</th>
+          <th style="text-align: center">price</th>
+          <th style="text-align: center">status</th>
+          <th style="text-align: center">chi-tiết</th>
+          <th style="text-align: center">edit</th>
+          <th style="text-align: center">delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let vinh of tuors  ">
+
+          <td>{{vinh.id}}</td>
+
+          <td><a>{{vinh.name}}</a></td>
+
+          <td>{{vinh.price}}</td>
+
+          <td *ngIf="vinh.status=== 1 " style="color: cornflowerblue">còn tuor</td>
+          <td *ngIf="vinh.status=== 2 " style="color: red">hết tuor</td>
+
+          <td>
+            <button mat-stroked-button color="blue" class="btn btn-success" (click)="showEdit(vinh)" data-toggle="modal"
+                               data-target="#detail">chi-tiết
+            </button>
+          </td>
+          <td>
+            <button mat-stroked-button color="warn" class="btn btn-warning" (click)="showEdit(vinh)" data-toggle="modal"
+                    data-target="#myModaledit">edit
+            </button>
+          </td>
+
+          <td>
+            <button type="button" (click)="delete(vinh.id)"  class="btn"><i class="material-icons"
+                                                                           style="color: firebrick">delete_forever</i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!--delete-->
+<!--<div class="modal" tabindex="-1" role="dialog" id="detail">-->
+<!--  <div class="modal-dialog" role="document">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title">Modal title</h5>-->
+<!--        <button type="button" class="close"  data-dismiss="modal" aria-label="Close">-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="modal-body" >-->
+<!--          <h2 name="name" [(ngModel)]="tuor.name"></h2>-->
+<!--          <h4 name="price" [(ngModel)]="tuor.price"></h4>-->
+<!--          <h4 name="status" *ngIf="tuor.status=== 1 " style="color: cornflowerblue"> trạng thái: còn tuor</h4>-->
+<!--          <h4 name="status" *ngIf="tuor.status=== 2 " style="color: red"> trạng thái:  hết tuor</h4>-->
+<!--          <p name="description" [(ngModel)]="tuor.description"></p>-->
+
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-primary" name="id" >delete changes</button>-->
+<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--matterial-->
+<!-- modal create-->
+<div class="modal" id="create">
+  <form (ngSubmit)="createTuor()" [formGroup]="formTuor">
+
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: aliceblue">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">create users</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <mat-form-field appearance="fill">
+            <mat-label>id</mat-label>
+            <input matInput formControlName="id">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <p *ngIf="!formTuor?.get('id')?.valid" style="color: red">* id không được để trống</p>
+
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="fill">
+            <mat-label>name</mat-label>
+            <input matInput formControlName="name">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+<!--            <p *ngIf="formTuor?.get('name')?.valid" style="color: red">* không được nhập dưới 6</p>-->
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>price</mat-label>
+            <input matInput name="price" formControlName="price">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+<!--            <p *ngIf="!formTuor?.get('price')?.valid" style="color: red">* giá phải lớn hơn 5</p>-->
+          </mat-form-field>
+          &nbsp;
+
+          <mat-form-field appearance="fill">
+            <mat-label>status</mat-label>
+            <input matInput name="status" formControlName="status">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+            <!--            <p *ngIf="!formTuor?.get('price')?.valid" style="color: red">* giá phải lớn hơn 5</p>-->
+          </mat-form-field>
+
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>status</mat-label>-->
+<!--            <mat-select formControlName="status" style="">-->
+<!--              <mat-optgroup value="1">còn tuor</mat-optgroup>-->
+<!--              <mat-optgroup value="2">hết tuor</mat-optgroup>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>description</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">save</button>
+
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--modale edit-->
+<div class="modal" id="myModaledit">
+
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: cornsilk">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">create users</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form #formEdit="ngForm" (ngSubmit)="editTuor(formEdit.value)">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <mat-form-field appearance="fill" hidden>
+            <mat-label>id</mat-label>
+            <input matInput name="id" [(ngModel)]="tuor.id" hidden>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="fill">
+            <mat-label>name</mat-label>
+            <input matInput name="name" [(ngModel)]="tuor.name" #name="ngModel">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>price</mat-label>
+            <input matInput name="price" [(ngModel)]="tuor.price" #price="ngModel" min="5">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+          &nbsp;<br>
+          <mat-form-field appearance="fill">
+            <mat-label>status</mat-label>
+            <input matInput name="status" [(ngModel)]="tuor.status" #status="ngModel" min="5">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>description</mat-label>
+            <textarea matInput name="description" [(ngModel)]="tuor.description"></textarea>
+          </mat-form-field>
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" >edit</button>
+
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!--modale edit-->
+<div class="modal" id="detail">
+
+  <div class="modal-dialog">
+    <div class="modal-content" style="background: cornsilk">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 class="modal-title">detail tuor</h2>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form #formEdit="ngForm" (ngSubmit)="editTuor(formEdit.value)">
+        <!-- Modal body -->
+        <div class="modal-body">
+          <mat-form-field appearance="fill" hidden>
+            <mat-label>id</mat-label>
+            <input matInput name="id" [(ngModel)]="tuor.id" hidden>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          &nbsp;
+          <mat-form-field appearance="fill">
+            <mat-label>name</mat-label>
+            <input matInput name="name" [(ngModel)]="tuor.name" #name="ngModel">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>price</mat-label>
+            <input matInput name="price" [(ngModel)]="tuor.price" #price="ngModel" min="5">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+          &nbsp;<br>
+          <mat-form-field appearance="fill">
+            <mat-label>status</mat-label>
+            <input matInput name="status" [(ngModel)]="tuor.status" #status="ngModel" min="5">
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill">
+            <mat-label>description</mat-label>
+            <textarea matInput name="description" [(ngModel)]="tuor.description" style="size:auto"></textarea>
+          </mat-form-field>
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <a routerLink="/tuor"><button type="submit" data-dismiss="modal" class="btn btn-success">back to home</button></a>
+
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
